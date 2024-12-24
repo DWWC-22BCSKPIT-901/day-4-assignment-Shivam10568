@@ -1,0 +1,28 @@
+#include <vector>
+#include <stack>
+#include <iostream>
+using namespace std;
+
+int poisonousPlants(vector<int> p) {
+    stack<pair<int, int>> s;
+    int maxDays = 0;
+
+    for (int i = 0; i < p.size(); ++i) {
+        int days = 0;
+        while (!s.empty() && s.top().first >= p[i]) {
+            days = max(days, s.top().second);
+            s.pop();
+        }
+        if (s.empty()) days = 0;
+        else days += 1;
+        s.push({p[i], days});
+        maxDays = max(maxDays, days);
+    }
+    return maxDays;
+}
+
+int main() {
+    vector<int> plants = {6, 5, 8, 4, 7, 10, 9};
+    cout << "Days until no plants die: " << poisonousPlants(plants) << endl; // Outputs: 2
+    return 0;
+}
