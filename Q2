@@ -1,0 +1,45 @@
+#include <stack>
+#include <iostream>
+
+class MyQueue {
+    std::stack<int> stack1, stack2;
+
+    void transfer() {
+        while (!stack1.empty()) {
+            stack2.push(stack1.top());
+            stack1.pop();
+        }
+    }
+
+public:
+    void push(int x) {
+        stack1.push(x);
+    }
+
+    int pop() {
+        if (stack2.empty()) transfer();
+        int top = stack2.top();
+        stack2.pop();
+        return top;
+    }
+
+    int peek() {
+        if (stack2.empty()) transfer();
+        return stack2.top();
+    }
+
+    bool empty() {
+        return stack1.empty() && stack2.empty();
+    }
+};
+
+int main() {
+    MyQueue queue;
+    queue.push(1);
+    queue.push(2);
+    std::cout << "Peek: " << queue.peek() << std::endl; // Outputs: 1
+    std::cout << "Pop: " << queue.pop() << std::endl;  // Outputs: 1
+    std::cout << "Empty: " << queue.empty() << std::endl; // Outputs: false
+
+    return 0;
+}
