@@ -1,0 +1,46 @@
+
+#include <iostream>
+#include <stack>
+#include <limits.h>
+#include <algorithm>
+
+class MinStack {
+    std::stack<int> stack, minStack;
+
+public:
+    MinStack() {
+        minStack.push(INT_MAX);
+    }
+
+    void push(int val) {
+        stack.push(val);
+        minStack.push(std::min(val, minStack.top()));
+    }
+
+    void pop() {
+        stack.pop();
+        minStack.pop();
+    }
+
+    int top() {
+        return stack.top();
+    }
+
+    int getMin() {
+        return minStack.top();
+    }
+};
+
+int main() {
+    MinStack minStack;
+    minStack.push(-2);
+    minStack.push(0);
+    minStack.push(-3);
+
+    std::cout << "Minimum: " << minStack.getMin() << std::endl; // Outputs: -3
+    minStack.pop();
+    std::cout << "Top: " << minStack.top() << std::endl;       // Outputs: 0
+    std::cout << "Minimum: " << minStack.getMin() << std::endl; // Outputs: -2
+
+    return 0;
+}
